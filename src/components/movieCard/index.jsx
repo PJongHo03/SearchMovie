@@ -1,12 +1,7 @@
 import { useEffect } from "react";
 import "./style.css";
 
-function MovieCard({
-  title = "제목없음",
-  year = "????",
-  rating = "?",
-  posterUrl = "placeholder.jpg",
-}) {
+function MovieCard({ title, year, rating, posterUrl }) {
   return (
     <div className="movie-card">
       <div className="movie-poster">

@@ -3,10 +3,20 @@ import axiosInstance from "../api/tmdb";
 import { useEffect, useState } from "react";
 
 function MovieCards() {
-  const [movie, setMovie] = useState(null);
+  const [movies, setMovies] = useState([]);
 
-  const handleMovie = (getmovie) => {
-    setMovie(getmovie);
+  const handleMovie = (movieData) => {
+    setMovies(() => {
+      const MovieList = [
+        {
+          title: movieData.title,
+          year: movieData.release_date,
+          rating: movieData.vote_average,
+          posterUrl: `https://image.tmdb.org/t/p/w500/${movieData.poster_path}`,
+        },
+      ];
+      return MovieList;
+    });
   };
 
   useEffect(() => {
@@ -18,24 +28,24 @@ function MovieCards() {
           },
         });
 
-        const firstMovie = res.data.results[0];
-        handleMovie(firstMovie);
+        handleMovie(res.data.results[0]);
       } catch (error) {
         console.log(error);
       }
     };
-
     getApi();
   }, []);
 
+  console.log(movies);
+
   return (
     <div className="movie-grid">
-      {movie && (
+      {movies.length > 0 && (
         <MovieCard
-          title={movie.title}
-          year={movie.release_date.slice(0, 4)}
-          rating={movie.vote_average.toFixed(1)}
-          posterUrl={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+          title={movies[0].title}
+          year={movies[0].year}
+          rating={movies[0].rating}
+          posterUrl={movies[0].posterUrl}
         />
       )}
       <MovieCard
