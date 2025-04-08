@@ -1,32 +1,48 @@
 import MovieCard from "./movieCard";
 import axiosInstance from "../api/tmdb";
+import { useEffect, useState } from "react";
 
 function MovieCards() {
-  const getApi = async () => {
-    try {
-      const res = await axiosInstance.get("trending/movie/day", {
-        params: {
-          page: 1,
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
+  const [movie, setMovie] = useState(null);
+
+  const handleMovie = (getmovie) => {
+    setMovie(getmovie);
   };
 
+  useEffect(() => {
+    const getApi = async () => {
+      try {
+        const res = await axiosInstance.get("trending/movie/day", {
+          params: {
+            page: 1,
+          },
+        });
+
+        const firstMovie = res.data.results[0];
+        handleMovie(firstMovie);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getApi();
+  }, []);
+
   return (
-    <div className='movie-grid'>
+    <div className="movie-grid">
+      {movie && (
+        <MovieCard
+          title={movie.title}
+          year={movie.release_date.slice(0, 4)}
+          rating={movie.vote_average.toFixed(1)}
+          posterUrl={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+        />
+      )}
       <MovieCard
-        title='매트릭스'
-        year='1999'
-        rating='8.7'
-        posterUrl='/placeholder-image.jpg'
-      />
-      <MovieCard
-        title='레옹'
-        year='1994'
-        rating='8.5'
-        posterUrl='/placeholder-image.jpg'
+        title="레옹"
+        year="1994"
+        rating="8.5"
+        posterUrl="/placeholder-image.jpg"
       />
     </div>
   );
