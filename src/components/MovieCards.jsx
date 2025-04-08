@@ -5,17 +5,16 @@ import { useEffect, useState } from "react";
 function MovieCards() {
   const [movies, setMovies] = useState([]);
 
-  const handleMovie = (movieData) => {
+  const handleMovie = (movieList) => {
     setMovies(() => {
-      const MovieList = [
-        {
-          title: movieData.title,
-          year: movieData.release_date,
-          rating: movieData.vote_average,
-          posterUrl: `https://image.tmdb.org/t/p/w500/${movieData.poster_path}`,
-        },
-      ];
-      return MovieList;
+      const updateMovieList = movieList.map((movie) => ({
+        title: movie.title,
+        year: movie.release_date.slice(0, 4),
+        rating: movie.vote_average.toFixed(1),
+        posterUrl: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
+      }));
+
+      return updateMovieList;
     });
   };
 
@@ -28,7 +27,7 @@ function MovieCards() {
           },
         });
 
-        handleMovie(res.data.results[0]);
+        handleMovie(res.data.results);
       } catch (error) {
         console.log(error);
       }
@@ -40,20 +39,15 @@ function MovieCards() {
 
   return (
     <div className="movie-grid">
-      {movies.length > 0 && (
+      {movies.map((movie, movieIndex) => (
         <MovieCard
-          title={movies[0].title}
-          year={movies[0].year}
-          rating={movies[0].rating}
-          posterUrl={movies[0].posterUrl}
+          key={movieIndex}
+          title={movie.title}
+          year={movie.year}
+          rating={movie.rating}
+          posterUrl={movie.posterUrl}
         />
-      )}
-      <MovieCard
-        title="레옹"
-        year="1994"
-        rating="8.5"
-        posterUrl="/placeholder-image.jpg"
-      />
+      ))}
     </div>
   );
 }
