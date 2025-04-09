@@ -23,8 +23,6 @@ function MovieCards() {
         const res = await axiosInstance.get("trending/movie/day", {
           params: { page: page },
         });
-        console.log(res.data.results);
-
         handleMovie(res.data.results);
       } catch (error) {
         console.log(error);
@@ -34,7 +32,7 @@ function MovieCards() {
   }, [page]);
 
   return (
-    <div className="movie-grid">
+    <div className='movie-grid'>
       {movies.map((movie, movieIndex) => (
         <MovieCard
           key={movieIndex}
@@ -44,9 +42,9 @@ function MovieCards() {
           posterUrl={movie.posterUrl}
         />
       ))}
-      <div className="load-more-wrapper">
+      <div className='load-more-wrapper'>
         <button
-          className="load-more-button"
+          className='load-more-button'
           onClick={() => setPage((prev) => prev + 1)}
         >
           더 보기
