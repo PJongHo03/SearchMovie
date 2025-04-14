@@ -2,27 +2,12 @@ import "./style.css";
 import { useState } from "react";
 import axiosInstance from "../../api/tmdb";
 
-function MovieSearch() {
+function MovieSearch({ searchMovieApi }) {
   const [query, setQuery] = useState("");
 
   const handleSearch = () => {
     if (!query.trim()) return;
-    searchMovieApi();
-  };
-
-  const searchMovieApi = async () => {
-    try {
-      const res = await axiosInstance.get("search/movie", {
-        params: {
-          include_adult: false,
-          query: query,
-          page: 1,
-        },
-      });
-      console.log(res.data.results);
-    } catch (error) {
-      console.log("오류 >>> ", error);
-    }
+    searchMovieApi(query);
   };
 
   const handleKeyDown = (e) => {
@@ -47,14 +32,14 @@ function MovieSearch() {
         </div>
       </div>
 
-      <div className='filter-section'>
+      {/* <div className='filter-section'>
         <button className='filter-button active'>전체</button>
         <button className='filter-button'>액션</button>
         <button className='filter-button'>코미디</button>
         <button className='filter-button'>로맨스</button>
         <button className='filter-button'>SF</button>
         <button className='filter-button'>호러</button>
-      </div>
+      </div> */}
     </main>
   );
 }
