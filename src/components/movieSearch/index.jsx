@@ -8,6 +8,7 @@ function MovieSearch({ searchMovieApi, setMovies }) {
   const handleSearch = () => {
     if (!query.trim()) return;
     searchMovieApi(query, setMovies);
+    setQuery("");
   };
 
   const handleKeyDown = (e) => {

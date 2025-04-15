@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import MovieList from "./MovieList";
 import MovieSearch from "./movieSearch";
 import Header from "./header";
-import { getApi, searchMovieApi } from "../api/moviesApi.js";
+import { getApi, searchMovieApi } from "../api/moviesApi";
 
 function MovieCards() {
   const [movies, setMovies] = useState([]);

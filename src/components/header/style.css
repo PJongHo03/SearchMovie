@@ -9,6 +9,8 @@ header {
 .logo {
     font-size: 28px;
     font-weight: bold;
+    background-color: #141414;
+    border: none;
     color: #e50914;
 }
 

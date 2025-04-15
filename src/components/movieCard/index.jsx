@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import "./style.css";
 
 function MovieCard({ title, year, rating, posterUrl }) {
