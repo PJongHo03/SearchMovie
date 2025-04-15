@@ -5,8 +5,7 @@ import MovieCards from "./components/MovieCards.jsx";
 
 function App() {
   return (
-    <div className='container'>
-      <Header></Header>
+    <div className="container">
       <MovieCards></MovieCards>
       <Footer></Footer>
     </div>

@@ -2,6 +2,8 @@ import axiosInstance from "../api/tmdb";
 import { useEffect, useState } from "react";
 import MovieList from "./MovieList";
 import MovieSearch from "./movieSearch";
+import Header from "./header";
+import { getApi, searchMovieApi } from "../api/moviesApi.js";
 
 function MovieCards() {
   const [movies, setMovies] = useState([]);
@@ -18,42 +20,24 @@ function MovieCards() {
     setMovies((prev) => [...prev, ...list]);
   };
 
-  const searchMovieApi = async (query) => {
-    try {
-      const res = await axiosInstance.get("search/movie", {
-        params: {
-          include_adult: false,
-          query: query,
-          page: 1,
-        },
-      });
-      setMovies(res.data.results);
-    } catch (error) {
-      console.log("오류 >>> ", error);
-    }
-  };
-
   useEffect(() => {
-    const getApi = async () => {
-      try {
-        const res = await axiosInstance.get("trending/movie/day", {
-          params: { page },
-        });
-        appendMovie(res.data.results);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getApi();
+    getApi(page, appendMovie);
   }, [page]);
 
   return (
     <>
-      <MovieSearch searchMovieApi={searchMovieApi} />
+      <Header
+        page={() => {
+          setMovies([]);
+          setPage(1);
+          getApi(page, appendMovie);
+        }}
+      ></Header>
+      <MovieSearch searchMovieApi={searchMovieApi} setMovies={setMovies} />
       <MovieList movies={movieList}>
-        <div className='load-more-wrapper'>
+        <div className="load-more-wrapper">
           <button
-            className='load-more-button'
+            className="load-more-button"
             onClick={() => setPage((prev) => prev + 1)}
           >
             더 보기
