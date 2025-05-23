@@ -1,13 +1,12 @@
 import "./style.css";
 import { useState } from "react";
-import axiosInstance from "../../api/tmdb";
 
-function MovieSearch({ searchMovieApi, setMovies }) {
+function MovieSearch({ searchMovieApi, setMovies, page }) {
   const [query, setQuery] = useState("");
 
   const handleSearch = () => {
     if (!query.trim()) return;
-    searchMovieApi(query, setMovies);
+    searchMovieApi(page, query, setMovies);
     setQuery("");
   };
 

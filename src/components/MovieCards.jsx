@@ -33,11 +33,15 @@ function MovieCards() {
           getApi(page, appendMovie);
         }}
       ></Header>
-      <MovieSearch searchMovieApi={searchMovieApi} setMovies={setMovies} />
+      <MovieSearch
+        searchMovieApi={searchMovieApi}
+        setMovies={setMovies}
+        page={page}
+      />
       <MovieList movies={movieList}>
-        <div className="load-more-wrapper">
+        <div className='load-more-wrapper'>
           <button
-            className="load-more-button"
+            className='load-more-button'
             onClick={() => setPage((prev) => prev + 1)}
           >
             더 보기
